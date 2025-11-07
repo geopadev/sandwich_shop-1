@@ -22,17 +22,21 @@ class OrderItemDisplay extends StatelessWidget {
 class App extends StatelessWidget {
   const App({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return MaterialApp(
-        title: 'Sandwich Shop App',
-        home: Scaffold(
-            appBar: AppBar(title: const Text('Sandwich Counter')),
-            body: const Center(
-              child: Text('Welcome to the Sandwich Shop!'),
-            )));
-  }
+ @override
+Widget build(BuildContext context) {
+  return MaterialApp(
+    title: 'Sandwich Shop App',
+    home: Scaffold(
+      appBar: AppBar(title: const Text('Sandwich Counter')),
+      body: Center(
+        child: Container(
+          
+          child: const OrderItemDisplay(5, 'Footlong'),
+        ),
+      ),
+    ),
+  );
+}
 }
 
 @override
