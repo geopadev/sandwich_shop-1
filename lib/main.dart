@@ -14,33 +14,42 @@ class OrderItemDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text('$quantity $itemType sandwich(es): ${'🥪' * quantity}');
+  }
 }
-}
-
-
 
 class App extends StatelessWidget {
   const App({super.key});
 
- @override
-Widget build(BuildContext context) {
-  return MaterialApp(
-    title: 'Sandwich Shop App',
-    home: Scaffold(
-      appBar: AppBar(title: const Text('Sandwich Counter')),
-      body: Center(
-        child: Container(
-          height: 100,
-          width: 200,
-          color: const Color.fromARGB(255, 0, 149, 255),
-          padding: const EdgeInsets.all(20.0),
-          margin: const EdgeInsets.all(10.0),
-          child: const OrderItemDisplay(5, 'Footlong'),
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Sandwich Shop App',
+      home: Scaffold(
+        appBar: AppBar(title: const Text('Sandwich Counter')),
+        body: Align(
+          alignment: Alignment.topLeft,
+          child: Container(
+            height: 100,
+            width: double.infinity,
+            color: const Color.fromARGB(255, 0, 149, 255),
+            padding: const EdgeInsets.all(20.0),
+            margin: const EdgeInsets.all(10.0),
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                OrderItemDisplay(3, 'BLT'),
+                SizedBox(width: 24),
+                OrderItemDisplay(5, 'Club'),
+                SizedBox(width: 24),
+                OrderItemDisplay(2, 'Veggie'),
+              ],
+            ),
+          ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 }
 
 @override
@@ -51,6 +60,7 @@ Widget build(BuildContext context) {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
