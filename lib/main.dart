@@ -30,7 +30,11 @@ Widget build(BuildContext context) {
       appBar: AppBar(title: const Text('Sandwich Counter')),
       body: Center(
         child: Container(
-          
+          height: 100,
+          width: 200,
+          color: const Color.fromARGB(255, 0, 149, 255),
+          padding: const EdgeInsets.all(20.0),
+          margin: const EdgeInsets.all(10.0),
           child: const OrderItemDisplay(5, 'Footlong'),
         ),
       ),
