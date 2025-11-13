@@ -26,25 +26,25 @@ class App extends StatelessWidget {
       title: 'Sandwich Shop App',
       home: Scaffold(
         appBar: AppBar(title: const Text('Sandwich Counter')),
-        body: Align(
-          alignment: Alignment.topLeft,
-          child: Container(
-            height: 100,
-            width: double.infinity,
-            color: const Color.fromARGB(255, 0, 149, 255),
-            padding: const EdgeInsets.all(20.0),
-            margin: const EdgeInsets.all(10.0),
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                OrderItemDisplay(3, 'BLT'),
-                SizedBox(width: 24),
-                OrderItemDisplay(5, 'Club'),
-                SizedBox(width: 24),
-                OrderItemDisplay(2, 'Veggie'),
-              ],
-            ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const OrderItemDisplay(5, 'Footlong'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () => print('Add button pressed!'),
+                    child: const Text('Add'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => print('Remove button pressed!'),
+                    child: const Text('Remove'),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
