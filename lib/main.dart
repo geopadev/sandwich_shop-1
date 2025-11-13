@@ -18,6 +18,8 @@ class OrderScreen extends StatefulWidget {
 
 class _OrderScreenState extends State<OrderScreen> {
   int _quantity = 0;
+  final TextEditingController _noteController = TextEditingController();
+  String _note = '';
 
   void _increaseQuantity() {
     if (_quantity < widget.maxQuantity) {
@@ -29,6 +31,12 @@ class _OrderScreenState extends State<OrderScreen> {
     if (_quantity > 0) {
       setState(() => _quantity--);
     }
+  }
+
+  @override
+  void dispose() {
+    _noteController.dispose();
+    super.dispose();
   }
 
   @override
@@ -44,16 +52,35 @@ class _OrderScreenState extends State<OrderScreen> {
             OrderItemDisplay(
               _quantity,
               'Footlong',
+              note: _note,
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+              child: TextField(
+                controller: _noteController,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Order note',
+                  hintText: 'Add a note (e.g., no onions, extra pickles)',
+                ),
+                onChanged: (v) => setState(() => _note = v),
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: _increaseQuantity,
+                  onPressed: () {
+                    _increaseQuantity();
+                  },
                   child: const Text('Add'),
                 ),
+                const SizedBox(width: 12),
                 ElevatedButton(
-                  onPressed: _decreaseQuantity,
+                  onPressed: () {
+                    _decreaseQuantity();
+                  },
                   child: const Text('Remove'),
                 ),
               ],
@@ -68,12 +95,25 @@ class _OrderScreenState extends State<OrderScreen> {
 class OrderItemDisplay extends StatelessWidget {
   final String itemType;
   final int quantity;
+  final String? note;
 
-  const OrderItemDisplay(this.quantity, this.itemType, {super.key});
+  const OrderItemDisplay(this.quantity, this.itemType, {this.note, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Text('$quantity $itemType sandwich(es): ${'🥪' * quantity}');
+    final emoji = '🥪' * quantity;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('$quantity $itemType sandwich(es): $emoji'),
+        if (note != null && note!.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(top: 4.0),
+            child: Text('Note: $note',
+                style: const TextStyle(fontStyle: FontStyle.italic)),
+          ),
+      ],
+    );
   }
 }
 
