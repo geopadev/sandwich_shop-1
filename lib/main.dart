@@ -7,6 +7,14 @@ void main() {
 
 enum SandwichSize { sixInch, footlong }
 
+class StyledButton {
+  StyledButton._();
+  static final ButtonStyle red = ElevatedButton.styleFrom(
+    backgroundColor: Colors.red,
+    foregroundColor: Colors.white,
+  );
+}
+
 class OrderScreen extends StatefulWidget {
   final int maxQuantity;
 
@@ -97,15 +105,20 @@ class _OrderScreenState extends State<OrderScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                // ...existing code...
                 ElevatedButton(
                   onPressed:
                       _quantity < widget.maxQuantity ? _increaseQuantity : null,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    foregroundColor: Colors.white,
-                  ),
+                  style: StyledButton.red,
                   child: const Text('Add'),
                 ),
+                const SizedBox(width: 12),
+                ElevatedButton(
+                  onPressed: _quantity > 0 ? _decreaseQuantity : null,
+                  style: StyledButton.red,
+                  child: const Text('Remove'),
+                ),
+// ...existing code...
                 const SizedBox(width: 12),
                 ElevatedButton(
                   onPressed: _quantity > 0 ? _decreaseQuantity : null,
