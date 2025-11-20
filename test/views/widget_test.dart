@@ -88,13 +88,13 @@ void main() {
       // Initial state should be footlong
       expect(find.text('0 white footlong sandwich(es): '), findsOneWidget);
 
-      // Tap the switch to toggle to six-inch
-      await tester.tap(find.byType(Switch));
+      // Tap the size switch to toggle to six-inch
+      await tester.tap(find.byKey(const Key('size_switch')));
       await tester.pump();
       expect(find.text('0 white six-inch sandwich(es): '), findsOneWidget);
 
-      // Tap the switch again to toggle back to footlong
-      await tester.tap(find.byType(Switch));
+      // Tap the size switch again to toggle back to footlong
+      await tester.tap(find.byKey(const Key('size_switch')));
       await tester.pump();
       expect(find.text('0 white footlong sandwich(es): '), findsOneWidget);
     });
