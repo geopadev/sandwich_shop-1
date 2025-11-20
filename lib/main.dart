@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sandwich_shop/views/app_styles.dart';
 import 'package:sandwich_shop/models/sandwich.dart';
 import 'package:sandwich_shop/models/cart.dart';
+import 'package:sandwich_shop/repositories/pricing_repository.dart';
 
 void main() {
   runApp(const App());
@@ -30,12 +31,20 @@ class OrderScreen extends StatefulWidget {
 
 class _OrderScreenState extends State<OrderScreen> {
   final Cart _cart = Cart();
+  final PricingRepository _pricingRepository = PricingRepository();
   final TextEditingController _notesController = TextEditingController();
 
   SandwichType _selectedSandwichType = SandwichType.veggieDelight;
   bool _isFootlong = true;
   BreadType _selectedBreadType = BreadType.white;
   int _quantity = 1;
+
+  double _calculateCurrentPrice() {
+    return _pricingRepository.calculatePrice(
+      quantity: _quantity,
+      isFootlong: _isFootlong,
+    );
+  }
 
   @override
   void initState() {
@@ -169,6 +178,19 @@ class _OrderScreenState extends State<OrderScreen> {
           'Sandwich Counter',
           style: heading1,
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.shopping_cart),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CartScreen(cart: _cart),
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -236,6 +258,12 @@ class _OrderScreenState extends State<OrderScreen> {
                   ),
                 ],
               ),
+              const SizedBox(height: 10),
+              Text(
+                'Price: £${_calculateCurrentPrice().toStringAsFixed(2)}',
+                style: heading2,
+                textAlign: TextAlign.center,
+              ),
               const SizedBox(height: 20),
               StyledButton(
                 onPressed: _getAddToCartCallback(),
@@ -283,6 +311,69 @@ class StyledButton extends StatelessWidget {
           const SizedBox(width: 8),
           Text(label),
         ],
+      ),
+    );
+  }
+}
+
+class CartScreen extends StatelessWidget {
+  final Cart cart;
+
+  const CartScreen({super.key, required this.cart});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Your Cart', style: heading1),
+      ),
+      body: AnimatedBuilder(
+        animation: cart,
+        builder: (context, child) {
+          if (cart.isEmpty) {
+            return const Center(
+              child: Text('Your cart is empty', style: normalText),
+            );
+          }
+          return Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: cart.items.length,
+                  itemBuilder: (context, index) {
+                    final item = cart.items[index];
+                    return ListTile(
+                      title: Text(item.sandwich.name, style: normalText),
+                      subtitle: Text(
+                        '${item.sandwich.breadType.name} bread, ${item.sandwich.isFootlong ? "Footlong" : "Six-inch"}',
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text('x${item.quantity}', style: normalText),
+                          const SizedBox(width: 10),
+                          Text('£${item.totalPrice().toStringAsFixed(2)}',
+                              style: normalText),
+                          IconButton(
+                            icon: const Icon(Icons.delete),
+                            onPressed: () => cart.removeItem(item.sandwich),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  'Total: £${cart.total().toStringAsFixed(2)}',
+                  style: heading1,
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
