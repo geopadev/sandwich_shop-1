@@ -13,7 +13,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Sandwich Shop App',
       home: OrderScreen(maxQuantity: 5),
     );
@@ -81,7 +81,12 @@ class _OrderScreenState extends State<OrderScreen> {
       String confirmationMessage =
           'Added $_quantity $sizeText ${sandwich.name} sandwich(es) on ${_selectedBreadType.name} bread to cart';
 
-      debugPrint(confirmationMessage);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(confirmationMessage),
+          duration: const Duration(seconds: 2),
+        ),
+      );
     }
   }
 
@@ -178,19 +183,6 @@ class _OrderScreenState extends State<OrderScreen> {
           'Sandwich Counter',
           style: heading1,
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.shopping_cart),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CartScreen(cart: _cart),
-                ),
-              );
-            },
-          ),
-        ],
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -272,6 +264,52 @@ class _OrderScreenState extends State<OrderScreen> {
                 backgroundColor: Colors.green,
               ),
               const SizedBox(height: 20),
+              const Divider(),
+              const SizedBox(height: 10),
+              const Text(
+                'Cart Summary',
+                style: heading2,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 10),
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      if (_cart.items.isEmpty)
+                        const Text('Your cart is empty', style: normalText)
+                      else
+                        ..._cart.items.map((item) => ListTile(
+                              title: Text(item.sandwich.name),
+                              subtitle: Text(
+                                  '${item.quantity}x ${item.sandwich.isFootlong ? "Footlong" : "Six-inch"}'),
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                      '£${item.totalPrice().toStringAsFixed(2)}'),
+                                  IconButton(
+                                    icon: const Icon(Icons.delete),
+                                    onPressed: () {
+                                      setState(() {
+                                        _cart.removeItem(item.sandwich);
+                                      });
+                                    },
+                                  ),
+                                ],
+                              ),
+                            )),
+                      const Divider(),
+                      Text(
+                        'Total Price: £${_cart.total().toStringAsFixed(2)}',
+                        style: heading2,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
             ],
           ),
         ),
@@ -311,69 +349,6 @@ class StyledButton extends StatelessWidget {
           const SizedBox(width: 8),
           Text(label),
         ],
-      ),
-    );
-  }
-}
-
-class CartScreen extends StatelessWidget {
-  final Cart cart;
-
-  const CartScreen({super.key, required this.cart});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Your Cart', style: heading1),
-      ),
-      body: AnimatedBuilder(
-        animation: cart,
-        builder: (context, child) {
-          if (cart.isEmpty) {
-            return const Center(
-              child: Text('Your cart is empty', style: normalText),
-            );
-          }
-          return Column(
-            children: [
-              Expanded(
-                child: ListView.builder(
-                  itemCount: cart.items.length,
-                  itemBuilder: (context, index) {
-                    final item = cart.items[index];
-                    return ListTile(
-                      title: Text(item.sandwich.name, style: normalText),
-                      subtitle: Text(
-                        '${item.sandwich.breadType.name} bread, ${item.sandwich.isFootlong ? "Footlong" : "Six-inch"}',
-                      ),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text('x${item.quantity}', style: normalText),
-                          const SizedBox(width: 10),
-                          Text('£${item.totalPrice().toStringAsFixed(2)}',
-                              style: normalText),
-                          IconButton(
-                            icon: const Icon(Icons.delete),
-                            onPressed: () => cart.removeItem(item.sandwich),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  'Total: £${cart.total().toStringAsFixed(2)}',
-                  style: heading1,
-                ),
-              ),
-            ],
-          );
-        },
       ),
     );
   }

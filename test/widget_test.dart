@@ -199,6 +199,60 @@ void main() {
     });
   });
 
+  group('OrderScreen - Cart Summary', () {
+    testWidgets('shows initial empty cart summary',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(const App());
+
+      // Scroll to bottom to see summary
+      await tester.drag(
+          find.byType(SingleChildScrollView), const Offset(0, -500));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Cart Summary'), findsOneWidget);
+      expect(find.text('Your cart is empty'), findsOneWidget);
+      expect(find.text('Total Price: £0.00'), findsOneWidget);
+    });
+
+    testWidgets('updates summary when item is added and removed',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(const App());
+
+      // Scroll to button
+      await tester.drag(
+          find.byType(SingleChildScrollView), const Offset(0, -400));
+      await tester.pumpAndSettle();
+
+      // Add 1 item (default is 1 footlong @ £11.00)
+      await tester.tap(find.text('Add to Cart'));
+      await tester.pumpAndSettle();
+
+      // Scroll to bottom to see summary
+      await tester.drag(
+          find.byType(SingleChildScrollView), const Offset(0, -200));
+      await tester.pumpAndSettle();
+
+      // Verify item is listed in a ListTile (Cart Summary)
+      expect(
+        find.descendant(
+          of: find.byType(ListTile),
+          matching: find.text('Veggie Delight'),
+        ),
+        findsOneWidget,
+      );
+      expect(find.text('1x Footlong'), findsOneWidget);
+      expect(find.text('Total Price: £11.00'), findsOneWidget);
+
+      // Find delete button and tap it
+      await tester.tap(find.byIcon(Icons.delete));
+      await tester.pumpAndSettle();
+
+      // Verify item is removed
+      expect(find.text('Your cart is empty'), findsOneWidget);
+      expect(find.text('Total Price: £0.00'), findsOneWidget);
+    });
+  });
+
   group('StyledButton', () {
     testWidgets('renders with icon and label', (WidgetTester tester) async {
       const testButton = StyledButton(
