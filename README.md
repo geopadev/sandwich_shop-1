@@ -18,9 +18,11 @@ A Flutter application for managing sandwich orders with an intuitive interface. 
 ## ✨ Features
 
 - **Sandwich Quantity Management**: Add or remove sandwiches with increment/decrement controls
-- **Size Selection**: Choose between six-inch or footlong sandwiches using an intuitive toggle switch
+- **Size Selection**: Choose between six-inch (£7) or footlong (£11) sandwiches using an intuitive toggle switch
 - **Bread Type Selection**: Select from three bread types (white, wheat, wholemeal) via dropdown menu
+- **Toasted Option**: Toggle between untoasted and toasted sandwiches
 - **Order Notes**: Add custom notes for special instructions (e.g., "no onions", "extra mayo")
+- **Real-Time Price Calculation**: Automatically calculates and displays total order price
 - **Visual Feedback**: Real-time display of order details with sandwich emojis 🥪
 - **Order Limits**: Configurable maximum order quantity to prevent over-ordering
 - **Responsive UI**: Clean, Material Design-based interface with styled buttons
@@ -98,24 +100,35 @@ Before you begin, ensure you have the following installed:
    - Minimum quantity is 0 (cannot go below zero)
 
 3. **Selecting Sandwich Size**
-   - Use the toggle switch to choose between "six-inch" and "footlong"
+   - Use the toggle switch to choose between "six-inch" (£7) and "footlong" (£11)
    - Default selection is "footlong"
+   - Price updates automatically based on size selection
 
-4. **Choosing Bread Type**
+4. **Toasted Option**
+   - Use the toggle switch to choose between "untoasted" and "toasted"
+   - Default selection is "untoasted"
+
+5. **Choosing Bread Type**
    - Click the dropdown menu to select bread type
    - Options: white, wheat, wholemeal
    - Default selection is "white"
 
-5. **Adding Order Notes**
+6. **Adding Order Notes**
    - Type in the text field to add special instructions
-   - Examples: "no onions", "extra mayo", "toasted"
+   - Examples: "no onions", "extra mayo"
    - Notes are displayed in real-time below the order summary
+
+7. **Viewing Total Price**
+   - Total price is calculated automatically and displayed in green
+   - Updates in real-time as quantity or size changes
+   - Formatted as £X.XX (e.g., £35.00 for 5 six-inch sandwiches)
 
 ### User Flow
 
 ```
-Launch App → Select Sandwich Size → Choose Bread Type → 
-Add Quantity → Enter Notes (optional) → View Order Summary
+Launch App → Select Sandwich Size → Choose Toasted Option → 
+Choose Bread Type → Add Quantity → Enter Notes (optional) → 
+View Order Summary & Total Price
 ```
 
 ## 🧪 Running Tests
@@ -134,6 +147,9 @@ flutter test
 # Test the OrderRepository
 flutter test test/repositories/order_repository_test.dart
 
+# Test the PricingRepository
+flutter test test/repositories/pricing_repository_test.dart
+
 # Test the UI widgets
 flutter test test/views/widget_test.dart
 ```
@@ -142,9 +158,10 @@ flutter test test/views/widget_test.dart
 
 The test suite covers:
 - ✅ Repository logic (increment/decrement, boundaries)
+- ✅ Pricing calculations (six-inch, footlong, multiple quantities)
 - ✅ Widget rendering and interactions
 - ✅ User input handling (buttons, switches, dropdowns, text fields)
-- ✅ Edge cases (max/min quantities, empty states)
+- ✅ Edge cases (max/min quantities, empty states, invalid inputs)
 
 ### View Test Coverage Report
 
@@ -159,12 +176,14 @@ sandwich_shop/
 ├── lib/
 │   ├── main.dart                    # Main application entry point and UI
 │   ├── repositories/
-│   │   └── order_repository.dart    # Business logic for order management
+│   │   ├── order_repository.dart    # Business logic for order management
+│   │   └── pricing_repository.dart  # Business logic for price calculations
 │   └── views/
 │       └── app_styles.dart          # Centralized text styles
 ├── test/
 │   ├── repositories/
-│   │   └── order_repository_test.dart  # Repository unit tests
+│   │   ├── order_repository_test.dart   # Repository unit tests
+│   │   └── pricing_repository_test.dart # Pricing logic unit tests
 │   └── views/
 │       └── widget_test.dart         # Widget and integration tests
 ├── images/                          # Screenshot assets
@@ -185,6 +204,11 @@ sandwich_shop/
   - Quantity tracking
   - Increment/decrement operations
   - Boundary validation (min/max limits)
+
+- **`pricing_repository.dart`**: Handles pricing logic with:
+  - Price calculation based on quantity and size
+  - Six-inch pricing (£7 per sandwich)
+  - Footlong pricing (£11 per sandwich)
 
 - **`app_styles.dart`**: Defines consistent text styles across the app
 
@@ -225,8 +249,8 @@ sandwich_shop/
 1. **Local State Only**: Orders are not persisted between app sessions
 2. **No Backend Integration**: No API calls or database storage
 3. **Single Order**: Cannot manage multiple orders simultaneously
-4. **No Price Calculation**: Doesn't calculate total cost
-5. **Limited Customization**: Fixed options for bread and size only
+4. **Fixed Pricing**: Prices are hardcoded (£7 for six-inch, £11 for footlong)
+5. **Limited Customization**: Fixed options for bread, size, and toasting only
 
 ### Minor Issues
 
@@ -240,14 +264,15 @@ sandwich_shop/
 
 - [ ] **Order Persistence**: Save orders locally using SharedPreferences or SQLite
 - [ ] **Order History**: View past orders
-- [ ] **Price Calculation**: Add pricing for different sizes and quantities
-- [ ] **Toppings Selection**: Add checkboxes for vegetables, sauces, and proteins
+- [ ] **Dynamic Pricing**: Admin interface to update prices
+- [ ] **Toppings Selection**: Add checkboxes for vegetables, sauces, and proteins with individual pricing
 - [ ] **Multiple Orders**: Manage a cart with multiple sandwich orders
 - [ ] **Order Submission**: Backend integration for submitting orders
 - [ ] **User Authentication**: Login/signup functionality
 - [ ] **Payment Integration**: Add payment gateway
 - [ ] **Dark Mode**: Theme switching capability
 - [ ] **Localization**: Multi-language support
+- [ ] **Discount Codes**: Apply promotional codes to orders
 
 ### Technical Improvements
 
