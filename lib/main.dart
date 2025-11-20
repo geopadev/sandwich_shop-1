@@ -121,15 +121,6 @@ class _OrderScreenState extends State<OrderScreen> {
                   child: const Text('Remove'),
                 ),
 // ...existing code...
-                const SizedBox(width: 12),
-                ElevatedButton(
-                  onPressed: _quantity > 0 ? _decreaseQuantity : null,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    foregroundColor: Colors.white,
-                  ),
-                  child: const Text('Remove'),
-                ),
               ],
             ),
           ],
