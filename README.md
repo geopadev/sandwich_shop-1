@@ -1,76 +1,125 @@
 # Sandwich Shop
 
-This is a simple Flutter app that allows users to order sandwiches.
-The app is built using Flutter and Dart, and it is designed primarily to be run in a web
-browser.
+A Flutter application for ordering customizable sandwiches with real-time pricing and cart management.
 
-## Install the essential tools
+## Features
 
-1. **Terminal**:
+- **Sandwich Customization**
+  - Choose from 4 sandwich types: Veggie Delight, Chicken Teriyaki, Tuna Melt, and Meatball Marinara
+  - Select size: Six-inch (£7.00) or Footlong (£11.00)
+  - Pick bread type: White, Wheat, or Wholemeal
+  - Adjust quantity with intuitive +/- controls
 
-    - **macOS** – use the built-in Terminal app by pressing **⌘ + Space**, typing **Terminal**, and pressing **Return**.
-    - **Windows** – open the start menu using the **Windows** key. Then enter **cmd** to open the **Command Prompt**. Alternatively, you can use **Windows PowerShell** or **Windows Terminal**.
+- **Real-time Price Display**
+  - See the price update instantly as you customize your order
+  - Price shown before adding items to cart
 
-2. **Git** – verify that you have `git` installed by entering `git --version`, in the terminal.
-    If this is missing, download the installer from [Git's official site](https://git-scm.com/downloads?utm_source=chatgpt.com).
+- **Smart Cart Management**
+  - View cart summary directly on the main screen
+  - See total items and total price
+  - Remove items from cart with one tap
+  - Automatic price calculations with support for tax, delivery fees, and discounts
 
-3. **Package managers**:
+- **User-Friendly Interface**
+  - Dynamic image display based on sandwich selection
+  - SnackBar notifications when items are added
+  - Clean, Material Design UI
 
-    - **Homebrew** (macOS) – verify that you have `brew` installed with `brew --version`; if missing, follow the instructions on the [Homebrew installation page](https://brew.sh/).
-    - **Chocolatey** (Windows) – verify that you have `choco` installed with `choco --version`; if missing, follow the instructions on the [Chocolatey installation page](https://chocolatey.org/install).
+## Installation
 
-4. **Flutter SDK** – verify that you have `flutter` installed and it is working with `flutter doctor`; if missing, install it using your package manager:
+### Prerequisites
+- Flutter SDK 2.17.0 or higher
+- Dart SDK
+- An IDE (VS Code or Android Studio recommended)
 
-    - **macOS**: `brew install --cask flutter`
-    - **Windows**: `choco install flutter`
+### Steps
 
-5. **Visual Studio Code** – verify that you have `code` installed with `code --version`; if missing, use your package manager to install it:
-
-    - **macOS**: `brew install --cask visual-studio-code`
-    - **Windows**: `choco install vscode`
-
-## Get the code
-
-### If this is your first time working on this project
-
-Enter the following commands in your terminal to clone the repository and
-open it in Visual Studio Code.
-You may want to change directory (`cd`) to the directory where you want to clone the
-repository first.
-
+1. Clone the repository:
 ```bash
-git clone --branch 5 https://github.com/manighahrmani/sandwich_shop
+git clone https://github.com/geopadev/sandwich_shop-1.git
 cd sandwich_shop
-code .
 ```
 
-### If you have already cloned the repository
-
-Enter the following commands in your terminal to switch to the correct branch.
-Remember to `cd` to the directory where you cloned the repository first.
-
-```bash
-git fetch origin
-git checkout 5
-```
-
-## Run the app
-
-Open the integrated terminal in Visual Studio Code by first opening the Command
-Palette with **⌘ + Shift + P** (macOS) or **Ctrl + Shift + P** (Windows) and
-typing **Terminal: Create New Terminal** then pressing **Enter**.
-
-In the terminal, run the following commands to install the dependencies and run
-the app in your web browser:
-
+2. Install dependencies:
 ```bash
 flutter pub get
+```
+
+3. Run the app:
+```bash
 flutter run
 ```
 
-## Get support
+## Usage
 
-Use [the dedicated Discord channel](https://discord.com/channels/760155974467059762/1370633732779933806)
-to ask your questions and get help from the community.
-Please provide as much context as possible, including the error messages you are seeing and
-screenshots (you can open Discord in your web browser).
+1. **Select your sandwich**: Use the dropdown menu to choose your preferred sandwich type
+2. **Choose size**: Toggle the switch between Six-inch and Footlong
+3. **Pick bread**: Select your bread type from the dropdown
+4. **Set quantity**: Use the +/- buttons to adjust the quantity
+5. **Check price**: The current price is displayed below the quantity controls
+6. **Add to cart**: Tap "Add to Cart" to add the item
+7. **View cart**: Scroll down to see your cart summary with all items and total price
+8. **Remove items**: Tap the delete icon next to any item to remove it from the cart
+
+## Running Tests
+
+Run all tests:
+```bash
+flutter test
+```
+
+Run tests with coverage:
+```bash
+flutter test --coverage
+```
+
+The project includes comprehensive tests:
+- Unit tests for models (Cart, Sandwich)
+- Unit tests for repositories (PricingRepository)
+- Widget tests for UI components and user interactions
+
+## Project Structure
+
+```
+lib/
+├── main.dart                    # Main app entry point and UI
+├── models/
+│   ├── cart.dart               # Cart and CartItem models
+│   └── sandwich.dart           # Sandwich model with enums
+├── repositories/
+│   └── pricing_repository.dart # Pricing logic
+└── views/
+    └── app_styles.dart         # Text styles and theming
+
+test/
+├── widget_test.dart            # Widget tests for UI
+├── models/
+│   ├── cart_test.dart         # Unit tests for Cart
+│   └── sandwich_test.dart     # Unit tests for Sandwich
+└── repositories/
+    └── pricing_repository_test.dart # Unit tests for pricing
+```
+
+## Technologies Used
+
+- **Flutter** - UI framework
+- **Dart** - Programming language
+- **Material Design** - Design system
+- **Provider Pattern** - State management (Cart uses ChangeNotifier)
+- **Repository Pattern** - Business logic separation
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is part of a programming course assignment.
+
+## Contact
+
+Repository: [sandwich_shop-1](https://github.com/geopadev/sandwich_shop-1)
