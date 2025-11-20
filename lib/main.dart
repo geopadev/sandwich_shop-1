@@ -27,13 +27,19 @@ class StyledButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton.icon(
+    return ElevatedButton(
       onPressed: onPressed,
-      icon: Icon(icon),
-      label: Text(label),
       style: ElevatedButton.styleFrom(
         backgroundColor: backgroundColor,
         foregroundColor: Colors.white,
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon),
+          const SizedBox(width: 8),
+          Text(label),
+        ],
       ),
     );
   }
@@ -214,8 +220,8 @@ class OrderItemDisplay extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('$quantity $itemType sandwich(es): $emoji', style: normalText),
-        Text('Bread: ${breadType.name}', style: normalText),
+        Text('$quantity ${breadType.name} $itemType sandwich(es): $emoji',
+            style: normalText),
         Padding(
           padding: const EdgeInsets.only(top: 4.0),
           child: Text('Note: $orderNote',
