@@ -53,44 +53,128 @@ class _CartScreenState extends State<CartScreen> {
           style: heading1,
         ),
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBox(height: 20),
-              for (MapEntry<Sandwich, int> entry in widget.cart.items.entries)
-                Column(
-                  children: [
-                    Text(entry.key.name, style: heading2),
-                    Text(
-                      '${_getSizeText(entry.key.isFootlong)} on ${entry.key.breadType.name} bread',
-                      style: normalText,
-                    ),
-                    Text(
-                      'Qty: ${entry.value} - £${_getItemPrice(entry.key, entry.value).toStringAsFixed(2)}',
-                      style: normalText,
-                    ),
-                    const SizedBox(height: 20),
-                  ],
+      body: widget.cart.isEmpty
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.shopping_cart_outlined,
+                      size: 64, color: Colors.grey),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Your cart is empty',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge
+                        ?.copyWith(color: Colors.grey),
+                  ),
+                  const SizedBox(height: 8),
+                  const Text('Add some delicious sandwiches to get started!'),
+                  const SizedBox(height: 24),
+                  ElevatedButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const Text('Back to Order'),
+                  ),
+                ],
+              ),
+            )
+          : Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: widget.cart.items.length,
+                    itemBuilder: (context, index) {
+                      final sandwich = widget.cart.items.keys.elementAt(index);
+                      final quantity = widget.cart.items[sandwich]!;
+
+                      return ListTile(
+                        title: Text(
+                            'Sandwich ${sandwich.isFootlong ? "(Footlong)" : "(6-inch)"}'),
+                        subtitle: Text('Quantity: $quantity'),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            // Remove Button (Trash Icon)
+                            IconButton(
+                              icon: const Icon(Icons.delete_outline,
+                                  color: Colors.red),
+                              onPressed: () {
+                                setState(() {
+                                  widget.cart.delete(sandwich);
+                                });
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Item removed from cart'),
+                                    duration: Duration(seconds: 1),
+                                  ),
+                                );
+                              },
+                            ),
+                            // Decrease Quantity Button
+                            IconButton(
+                              icon: const Icon(Icons.remove),
+                              onPressed: () {
+                                setState(() {
+                                  widget.cart.remove(sandwich);
+                                });
+                                if (!widget.cart.items.containsKey(sandwich)) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Item removed from cart'),
+                                      duration: Duration(seconds: 1),
+                                    ),
+                                  );
+                                }
+                              },
+                            ),
+                            Text('$quantity'),
+                            // Increase Quantity Button
+                            IconButton(
+                              icon: const Icon(Icons.add),
+                              onPressed: () {
+                                setState(() {
+                                  widget.cart.add(sandwich);
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 ),
-              Text(
-                'Total: £${widget.cart.totalPrice.toStringAsFixed(2)}',
-                style: heading2,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 20),
-              StyledButton(
-                onPressed: _goBack,
-                icon: Icons.arrow_back,
-                label: 'Back to Order',
-                backgroundColor: Colors.grey,
-              ),
-              const SizedBox(height: 20),
-            ],
-          ),
-        ),
-      ),
+                Container(
+                  padding: const EdgeInsets.all(16.0),
+                  color: Colors.grey[200],
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Total:',
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
+                          Text(
+                            '\$${widget.cart.totalPrice.toStringAsFixed(2)}',
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: const Text('Back to Order'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
     );
   }
 }
