@@ -26,6 +26,11 @@ class Cart {
     }
   }
 
+  /// Completely removes a sandwich from the cart regardless of quantity.
+  void delete(Sandwich sandwich) {
+    _items.remove(sandwich);
+  }
+
   void clear() {
     _items.clear();
   }
