@@ -43,6 +43,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   border: OutlineInputBorder(),
                 ),
                 style: normalText,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your name';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 16),
               TextFormField(
@@ -53,6 +59,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 keyboardType: TextInputType.emailAddress,
                 style: normalText,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your email';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 16),
               TextFormField(
@@ -63,6 +75,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 keyboardType: TextInputType.phone,
                 style: normalText,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your phone number';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 30),
               ElevatedButton(

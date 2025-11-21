@@ -29,27 +29,27 @@ The Cart Modification feature enables users of the Sandwich Shop Flutter app to 
 
 ### 3.1. Quantity Adjustment
 
-- [ ] Each cart item displays "+" and "–" buttons for quantity adjustment.
-- [ ] Tapping "+" increases the quantity by 1.
-- [ ] Tapping "–" decreases the quantity by 1.
-- [ ] If the quantity is reduced below 1, the item is removed from the cart.
-- [ ] The total price updates automatically and accurately.
-- [ ] The UI updates immediately to reflect changes.
+- [x] Each cart item displays "+" and "–" buttons for quantity adjustment.
+- [x] Tapping "+" increases the quantity by 1.
+- [x] Tapping "–" decreases the quantity by 1.
+- [x] If the quantity is reduced below 1, the item is removed from the cart.
+- [x] The total price updates automatically and accurately.
+- [x] The UI updates immediately to reflect changes.
 
 ### 3.2. Remove Item
 
-- [ ] Each cart item has a "Remove" button (e.g., trash icon).
-- [ ] Tapping "Remove" deletes the item from the cart.
-- [ ] The total price updates accordingly.
-- [ ] A snackbar or similar feedback is shown when an item is removed.
+- [x] Each cart item has a "Remove" button (e.g., trash icon).
+- [x] Tapping "Remove" deletes the item from the cart.
+- [x] The total price updates accordingly.
+- [x] A snackbar or similar feedback is shown when an item is removed.
 
 ### 3.3. General UI and Behavior
 
-- [ ] All changes are reflected immediately in the UI.
-- [ ] The cart's total price is always accurate.
-- [ ] The cart handles empty states gracefully (e.g., displays a message if empty).
-- [ ] The UI prevents negative quantities.
-- [ ] User feedback is provided for all cart modification actions.
+- [x] All changes are reflected immediately in the UI.
+- [x] The cart's total price is always accurate.
+- [x] The cart handles empty states gracefully (e.g., displays a message if empty).
+- [x] The UI prevents negative quantities.
+- [x] User feedback is provided for all cart modification actions.
 
 ---
 
@@ -91,15 +91,15 @@ The Profile Page feature allows users to view and edit their personal informatio
 
 ### 3.1. UI Components
 
-- [ ] The screen displays a clear title "My Profile".
-- [ ] Input fields exist for "Full Name", "Email Address", and "Phone Number".
-- [ ] A "Save Details" button is present at the bottom of the form.
+- [x] The screen displays a clear title "My Profile".
+- [x] Input fields exist for "Full Name", "Email Address", and "Phone Number".
+- [x] A "Save Details" button is present at the bottom of the form.
 
 ### 3.2. Functionality
 
-- [ ] Users can enter text into all input fields.
-- [ ] Tapping "Save Details" triggers a snackbar message confirming the action (e.g., "Profile details saved").
-- [ ] The screen is accessible via a link or button from the Order Screen.
+- [x] Users can enter text into all input fields.
+- [x] Tapping "Save Details" triggers a snackbar message confirming the action (e.g., "Profile details saved").
+- [x] The screen is accessible via a link or button from the Order Screen.
 
 ---
 
