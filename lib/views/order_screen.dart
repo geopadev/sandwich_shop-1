@@ -48,8 +48,10 @@ class _OrderScreenState extends State<OrderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final unitPrice = _pricing.calculatePrice(quantity: 1, isFootlong: _isFootlong);
-    final previewTotal = _pricing.calculatePrice(quantity: _selectedQuantity, isFootlong: _isFootlong);
+    final unitPrice =
+        _pricing.calculatePrice(quantity: 1, isFootlong: _isFootlong);
+    final previewTotal = _pricing.calculatePrice(
+        quantity: _selectedQuantity, isFootlong: _isFootlong);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Sandwich Shop')),
@@ -66,7 +68,6 @@ class _OrderScreenState extends State<OrderScreen> {
                   children: [
                     const Text('Configure sandwich', style: heading2),
                     const SizedBox(height: 8),
-                    // Type dropdown
                     Row(
                       children: [
                         const Text('Type: '),
@@ -77,20 +78,22 @@ class _OrderScreenState extends State<OrderScreen> {
                           items: SandwichType.values
                               .map((t) => DropdownMenuItem(
                                     value: t,
-                                    child: Text(Sandwich(type: t, isFootlong: false, breadType: BreadType.white).name),
+                                    child: Text(Sandwich(
+                                            type: t,
+                                            isFootlong: false,
+                                            breadType: BreadType.white)
+                                        .name),
                                   ))
                               .toList(),
                         ),
                       ],
                     ),
-                    // Size toggle
                     SwitchListTile(
                       title: Text(_isFootlong ? 'Footlong' : 'Six-inch'),
                       value: _isFootlong,
                       onChanged: (v) => setState(() => _isFootlong = v),
                       contentPadding: EdgeInsets.zero,
                     ),
-                    // Bread dropdown
                     Row(
                       children: [
                         const Text('Bread: '),
@@ -107,7 +110,6 @@ class _OrderScreenState extends State<OrderScreen> {
                         ),
                       ],
                     ),
-                    // Quantity selector
                     Row(
                       children: [
                         const Text('Quantity: '),
@@ -128,8 +130,9 @@ class _OrderScreenState extends State<OrderScreen> {
                       ],
                     ),
                     const SizedBox(height: 8),
-                    // Live preview
-                    Text('Unit: ${_priceString(unitPrice)} · Total: ${_priceString(previewTotal)}', style: normalText),
+                    Text(
+                        'Unit: ${_priceString(unitPrice)} · Total: ${_priceString(previewTotal)}',
+                        style: normalText),
                     const SizedBox(height: 12),
                     Row(
                       children: [
@@ -149,18 +152,15 @@ class _OrderScreenState extends State<OrderScreen> {
 
             const SizedBox(height: 12),
 
-            // Cart summary header
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const [
                 Text('Cart', style: heading2),
-                // subtotal will be shown by AnimatedBuilder below
               ],
             ),
 
             const SizedBox(height: 8),
 
-            // Cart list + subtotal
             Expanded(
               child: AnimatedBuilder(
                 animation: _cart,
@@ -177,8 +177,10 @@ class _OrderScreenState extends State<OrderScreen> {
                           children: items.entries.map((entry) {
                             final Sandwich sandwich = entry.key;
                             final int qty = entry.value;
-                            final double unit = _pricing.calculatePrice(quantity: 1, isFootlong: sandwich.isFootlong);
-                            final double lineTotal = _pricing.calculatePrice(quantity: qty, isFootlong: sandwich.isFootlong);
+                            final double unit = _pricing.calculatePrice(
+                                quantity: 1, isFootlong: sandwich.isFootlong);
+                            final double lineTotal = _pricing.calculatePrice(
+                                quantity: qty, isFootlong: sandwich.isFootlong);
 
                             return Card(
                               margin: const EdgeInsets.symmetric(vertical: 6),
@@ -188,10 +190,13 @@ class _OrderScreenState extends State<OrderScreen> {
                                   width: 56,
                                   height: 56,
                                   fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stack) => const Icon(Icons.fastfood),
+                                  errorBuilder: (context, error, stack) =>
+                                      const Icon(Icons.fastfood),
                                 ),
-                                title: Text('${sandwich.name} · ${sandwich.isFootlong ? 'Footlong' : 'Six-inch'}'),
-                                subtitle: Text('${sandwich.breadType.name} · Unit: ${_priceString(unit)} · ${_priceString(lineTotal)}'),
+                                title: Text(
+                                    '${sandwich.name} · ${sandwich.isFootlong ? 'Footlong' : 'Six-inch'}'),
+                                subtitle: Text(
+                                    '${sandwich.breadType.name} · Unit: ${_priceString(unit)} · ${_priceString(lineTotal)}'),
                                 trailing: SizedBox(
                                   width: 140,
                                   child: Row(
@@ -200,10 +205,9 @@ class _OrderScreenState extends State<OrderScreen> {
                                       IconButton(
                                         icon: const Icon(Icons.remove),
                                         onPressed: () {
-                                          // decrement by 1 (Cart will remove if reaches zero)
                                           _cart.remove(sandwich, quantity: 1);
-                                          // if removal happened, Cart already recorded snapshot; show undo
-                                          _showSnackBar('Removed 1 × ${sandwich.name}');
+                                          _showSnackBar(
+                                              'Removed 1 × ${sandwich.name}');
                                         },
                                       ),
                                       Text('$qty'),
@@ -218,11 +222,13 @@ class _OrderScreenState extends State<OrderScreen> {
                                       IconButton(
                                         icon: const Icon(Icons.delete_outline),
                                         onPressed: () {
-                                          // remove entire line
-                                          final int currentQty = _cart.getQuantity(sandwich);
+                                          final int currentQty =
+                                              _cart.getQuantity(sandwich);
                                           if (currentQty > 0) {
-                                            _cart.removeItem(sandwich, quantity: currentQty);
-                                            _showSnackBar('Removed ${currentQty} × ${sandwich.name}');
+                                            _cart.removeItem(sandwich,
+                                                quantity: currentQty);
+                                            _showSnackBar(
+                                                'Removed ${currentQty} × ${sandwich.name}');
                                           }
                                         },
                                       ),
