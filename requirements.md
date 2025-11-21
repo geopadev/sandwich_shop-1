@@ -109,3 +109,48 @@ The Profile Page feature allows users to view and edit their personal informatio
 - [x] Add `TextFormField` widgets for Name, Email, and Phone.
 - [x] Implement a "Save" button that displays a confirmation Snackbar.
 - [x] Add a navigation link/button to the `ProfileScreen` at the bottom of the Order Screen.
+
+# Navigation Drawer Feature Requirements
+
+## 1. Feature Description and Purpose
+
+Implement a responsive Navigation Drawer accessible from all screens to improve app navigation. The implementation must follow the DRY (Don't Repeat Yourself) principle by creating a reusable navigation component. The layout should adapt to the screen width: functioning as a standard modal drawer on mobile devices and a permanent side menu on larger screens (tablets/desktops).
+
+---
+
+## 2. User Stories
+
+### 2.1. Global Navigation
+
+- **As a user**, I want to access the navigation menu from any screen (Order, Cart, Profile, About) to switch contexts easily.
+
+### 2.2. Responsive Design
+
+- **As a mobile user**, I want a hamburger menu that opens a drawer, maximizing screen space for content.
+- **As a desktop/tablet user**, I want a permanent side menu for quick, single-click navigation.
+
+---
+
+## 3. Acceptance Criteria
+
+### 3.1. Reusability
+
+- [ ] A single, reusable widget defines the navigation menu items.
+- [ ] All screens utilize a shared layout wrapper to ensure consistency.
+
+### 3.2. Responsiveness
+
+- [ ] Screen width < 600px: Navigation is hidden in a Drawer (accessible via AppBar icon).
+- [ ] Screen width >= 600px: Navigation is displayed as a permanent side column (Row layout).
+
+### 3.3. Navigation Items
+
+- [ ] Menu includes links to: Order Screen, Cart Screen, Profile Screen, About Screen.
+
+---
+
+## 4. Subtasks
+
+1. Create a reusable `AppDrawer` widget containing the navigation menu items.
+2. Create a `ResponsiveLayout` widget that accepts a `body` and `title`. It should determine whether to show a `Scaffold` with a drawer (mobile) or a `Row` with a permanent side menu (desktop) based on screen width.
+3. Refactor `OrderScreen`, `CartScreen`, `ProfileScreen`, and `AboutScreen` to use the `ResponsiveLayout` widget instead of `Scaffold` directly.
