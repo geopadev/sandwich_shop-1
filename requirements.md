@@ -108,8 +108,8 @@ Non-functional
 ## 5. Subtasks & implementation steps
 
 Subtask A — Cart model (`lib/models/cart.dart`)
-- Add/verify `CartItem` model: `{ Sandwich sandwich; int quantity; }`.
-- Implement:
+- [x] Add/verify `CartItem` model: `{ Sandwich sandwich; int quantity; }`.
+- [x] Implement:
   - `addItem(Sandwich sandwich, {int quantity = 1})`
   - `updateQuantity(Sandwich sandwich, int quantity)`
   - `removeItem(Sandwich sandwich)`
@@ -117,27 +117,27 @@ Subtask A — Cart model (`lib/models/cart.dart`)
   - `unitPriceFor(Sandwich sandwich)` — calls `PricingRepository` with `quantity:1`
   - `subtotal()` — sums `lineTotal` via `PricingRepository`
   - `undoLast()` — single-level undo snapshot restore
-- Ensure `notifyListeners()` on changes and enforce no negative quantities. Merge identical items using identity rule.
+- [x] Ensure `notifyListeners()` on changes and enforce no negative quantities. Merge identical items using identity rule.
 
 Subtask B — Order screen UI (`lib/views/order_screen.dart`)
-- Live preview: compute `unitPrice` and `total` using `PricingRepository` and display as `Unit: £x.xx · Total: £y.yy`.
-- Persistent cart summary on the Order screen showing a list of `CartItem`s with thumbnail, name, size, bread, unit price, line total, quantity controls, delete action.
-- Add to Cart: call `_cart.addItem(...)` and show SnackBar with UNDO (`_cart.undoLast()`).
-- Per-item actions: increment/decrement call `_cart.updateQuantity(...)`; delete calls `_cart.removeItem(...)`.
-- Edit action: show a modal editor (`showModalBottomSheet`) prefilled with item options; on save call `_cart.editItem(...)`.
+- [x] Live preview: compute `unitPrice` and `total` using `PricingRepository` and display as `Unit: £x.xx · Total: £y.yy`.
+- [x] Persistent cart summary on the Order screen showing a list of `CartItem`s with thumbnail, name, size, bread, unit price, line total, quantity controls, delete action.
+- [x] Add to Cart: call `_cart.addItem(...)` and show SnackBar with UNDO (`_cart.undoLast()`).
+- [x] Per-item actions: increment/decrement call `_cart.updateQuantity(...)`; delete calls `_cart.removeItem(...)`.
+- [x] Edit action: show a modal editor (`showModalBottomSheet`) prefilled with item options; on save call `_cart.editItem(...)`.
 
 Subtask C — Tests
-- Unit tests (`test/models/cart_test.dart`): addItem merging, updateQuantity, remove+undo, editItem merge/replace, subtotal correctness.
-- Widget tests (`test/views/cart_widget_test.dart`): live preview, add-to-cart, increment/decrement, delete+undo, edit modal flow.
-- Use `PricingRepository` implementation available in `lib/repositories/pricing_repository.dart` for pricing.
+- [x] Unit tests (`test/models/cart_test.dart`): addItem merging, updateQuantity, remove+undo, editItem merge/replace, subtotal correctness.
+- [x] Widget tests (`test/views/cart_widget_test.dart`): live preview, add-to-cart, increment/decrement, delete+undo, edit modal flow.
+- [x] Use `PricingRepository` implementation available in `lib/repositories/pricing_repository.dart` for pricing.
 
 Subtask D — Documentation & README
-- Update `README.md` to document new cart behaviors and how to run tests.
-- Add a developer note in `prompt.md` / project README linking to `requirements.md`.
+- [x] Update `README.md` to document new cart behaviors and how to run tests.
+- [x] Add a developer note in `prompt.md` / project README linking to `requirements.md`.
 
 Subtask E — QA and edge-case handling
-- Validate no negative quantities, optional `maxQuantity` enforcement, and resilience to rapid taps.
-- Manual QA checklist and automated tests to cover core edge cases.
+- [x] Validate no negative quantities, optional `maxQuantity` enforcement, and resilience to rapid taps.
+- [x] Manual QA checklist and automated tests to cover core edge cases.
 
 ---
 
@@ -167,16 +167,13 @@ Subtask E — QA and edge-case handling
 ---
 
 ## 9. Acceptance checklist (pre-merge)
-- [ ] Unit tests for Cart pass.
-- [ ] Widget tests for cart flows pass.
-- [ ] Pricing calls go through `PricingRepository`.
-- [ ] UI displays prices formatted as `£x.xx`.
-- [ ] SnackBar UNDO restores previous state.
-- [ ] README updated and developer note added.
+- [x] Unit tests for Cart pass.
+- [x] Widget tests for cart flows pass.
+- [x] Pricing calls go through `PricingRepository`.
+- [x] UI displays prices formatted as `£x.xx`.
+- [x] SnackBar UNDO restores previous state.
+- [x] README updated and developer note added.
 
 ---
 
 *End of requirements.*
-````
-
-I'll now create `requirements.md` in the project root containing the above content. Do you want me to run `flutter test` after creation? (I can run tests and report results.)

@@ -210,4 +210,7 @@ Do not include extra explanatory prose — only the code patches and test files.
 
 ---
 
+**Developer Note:**
+For detailed feature specifications, user stories, and acceptance criteria regarding the Cart Modification feature, please refer to `requirements.md` in the project root.
+
 *End of prompt.*

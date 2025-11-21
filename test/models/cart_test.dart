@@ -117,5 +117,66 @@ void main() {
       expect(cart.getQuantity(sandwichA), 0);
       expect(cart.isEmpty, isTrue);
     });
+
+    test('editItem should replace item if no merge target exists', () {
+      cart.add(sandwichA, quantity: 2);
+      final newSandwich = Sandwich(
+        type: sandwichA.type,
+        isFootlong: !sandwichA.isFootlong, // changed size
+        breadType: sandwichA.breadType,
+      );
+
+      cart.editItem(sandwichA, newSandwich);
+
+      expect(cart.getQuantity(sandwichA), 0);
+      expect(cart.getQuantity(newSandwich), 2); // quantity preserved
+      expect(cart.length, 1);
+    });
+
+    test('editItem should merge quantities if target item exists', () {
+      cart.add(sandwichA, quantity: 2);
+      cart.add(sandwichB, quantity: 3);
+
+      // Edit sandwichA to look exactly like sandwichB
+      final newSandwich = sandwichB;
+
+      cart.editItem(sandwichA, newSandwich);
+
+      expect(cart.getQuantity(sandwichA), 0);
+      expect(cart.getQuantity(sandwichB), 5); // 2 + 3 merged
+      expect(cart.length, 1);
+    });
+
+    test('undoLast should restore removed item', () {
+      cart.add(sandwichA, quantity: 2);
+      cart.removeItem(sandwichA); // destructive action
+
+      expect(cart.isEmpty, isTrue);
+
+      cart.undoLast();
+
+      expect(cart.isEmpty, isFalse);
+      expect(cart.getQuantity(sandwichA), 2);
+    });
+
+    test('undoLast should restore item removed via updateQuantity', () {
+      cart.add(sandwichA, quantity: 2);
+      cart.updateQuantity(sandwichA, 0); // destructive action
+
+      expect(cart.isEmpty, isTrue);
+
+      cart.undoLast();
+
+      expect(cart.getQuantity(sandwichA), 2);
+    });
+
+    test('subtotal sums up line totals correctly', () {
+      // 1x Six-inch (7.00) + 2x Footlong (11.00 each = 22.00) = 29.00
+      cart.add(sandwichA, quantity: 1);
+      cart.add(sandwichB, quantity: 2);
+
+      expect(cart.subtotal(), 29.00);
+      expect(cart.totalPrice, 29.00);
+    });
   });
 }

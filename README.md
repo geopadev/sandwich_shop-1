@@ -68,6 +68,26 @@ flutter pub get
 flutter run
 ```
 
+## Features
+
+- **Order Configuration**: Select sandwich type, size (Six-inch/Footlong), and bread.
+- **Live Price Preview**: See unit price and total cost update in real-time as you configure your order.
+- **Cart Management**:
+  - Add items to cart.
+  - Increment/Decrement quantities directly in the cart list.
+  - Remove items with a single tap.
+  - **Edit Items**: Modify the size or bread of an item already in the cart.
+  - **Undo**: Accidentally removed an item? Use the UNDO button on the SnackBar to restore it.
+- **Pricing**: All prices are calculated centrally ensuring consistency (Six-inch: £7.00, Footlong: £11.00).
+
+## Testing
+
+To run the test suite, including the new cart logic and widget tests:
+
+```bash
+flutter test
+```
+
 ## Get support
 
 Use [the dedicated Discord channel](https://discord.com/channels/760155974467059762/1370633732779933806)

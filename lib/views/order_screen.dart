@@ -46,6 +46,69 @@ class _OrderScreenState extends State<OrderScreen> {
     _showSnackBar('Added ${_selectedQuantity} × ${s.name}');
   }
 
+  void _showEditModal(Sandwich sandwich) {
+    bool isFootlong = sandwich.isFootlong;
+    BreadType bread = sandwich.breadType;
+
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) {
+        return StatefulBuilder(
+          builder: (context, setModalState) {
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Edit ${sandwich.name}', style: heading2),
+                  const SizedBox(height: 16),
+                  SwitchListTile(
+                    title: Text(isFootlong ? 'Footlong' : 'Six-inch'),
+                    value: isFootlong,
+                    onChanged: (v) => setModalState(() => isFootlong = v),
+                  ),
+                  Row(
+                    children: [
+                      const Text('Bread: '),
+                      const SizedBox(width: 8),
+                      DropdownButton<BreadType>(
+                        value: bread,
+                        onChanged: (v) => setModalState(() => bread = v!),
+                        items: BreadType.values
+                            .map((b) => DropdownMenuItem(
+                                  value: b,
+                                  child: Text(b.name),
+                                ))
+                            .toList(),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        final newSandwich = Sandwich(
+                          type: sandwich.type,
+                          isFootlong: isFootlong,
+                          breadType: bread,
+                        );
+                        _cart.editItem(sandwich, newSandwich);
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Save Changes'),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final unitPrice =
@@ -202,6 +265,13 @@ class _OrderScreenState extends State<OrderScreen> {
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
+                                      IconButton(
+                                        icon: const Icon(Icons.edit),
+                                        onPressed: () =>
+                                            _showEditModal(sandwich),
+                                        padding: EdgeInsets.zero,
+                                        constraints: const BoxConstraints(),
+                                      ),
                                       IconButton(
                                         icon: const Icon(Icons.remove),
                                         onPressed: () {
