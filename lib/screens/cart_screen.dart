@@ -39,11 +39,34 @@ class _CartScreenState extends State<CartScreen> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             IconButton(
+                              icon: const Icon(Icons.delete_outline,
+                                  color: Colors.red),
+                              onPressed: () {
+                                setState(() {
+                                  widget.cart.delete(sandwich);
+                                });
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Item removed from cart'),
+                                    duration: Duration(seconds: 1),
+                                  ),
+                                );
+                              },
+                            ),
+                            IconButton(
                               icon: const Icon(Icons.remove),
                               onPressed: () {
                                 setState(() {
                                   widget.cart.remove(sandwich);
                                 });
+                                if (!widget.cart.items.containsKey(sandwich)) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Item removed from cart'),
+                                      duration: Duration(seconds: 1),
+                                    ),
+                                  );
+                                }
                               },
                             ),
                             Text('$quantity'),
