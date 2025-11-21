@@ -61,3 +61,51 @@ The Cart Modification feature enables users of the Sandwich Shop Flutter app to 
 4. Ensure the total price and UI update immediately after any change.
 5. Provide user feedback (snackbar) for remove and update actions.
 6. Handle empty cart states with a clear message.
+
+# Profile Page Feature Requirements
+
+## 1. Feature Description and Purpose
+
+The Profile Page feature allows users to view and edit their personal information within the Sandwich Shop app. This screen provides fields for entering details such as name, email, and phone number. While actual data persistence and authentication are not yet implemented, this feature establishes the UI and basic validation logic necessary for future user account management.
+
+---
+
+## 2. User Stories
+
+### 2.1. View and Edit Details
+
+- **As a user**, I want to see input fields for my name, email, and phone number, so I can keep my contact information up to date.
+- **As a user**, I want to be able to type into these fields and see my changes reflected immediately.
+
+### 2.2. Save Action
+
+- **As a user**, I want a "Save" button that confirms my action, so I feel confident that my details have been captured (even if just a mock confirmation for now).
+
+### 2.3. Navigation
+
+- **As a user**, I want to access this profile page easily from the order screen, so I can quickly check my details while browsing.
+
+---
+
+## 3. Acceptance Criteria
+
+### 3.1. UI Components
+
+- [ ] The screen displays a clear title "My Profile".
+- [ ] Input fields exist for "Full Name", "Email Address", and "Phone Number".
+- [ ] A "Save Details" button is present at the bottom of the form.
+
+### 3.2. Functionality
+
+- [ ] Users can enter text into all input fields.
+- [ ] Tapping "Save Details" triggers a snackbar message confirming the action (e.g., "Profile details saved").
+- [ ] The screen is accessible via a link or button from the Order Screen.
+
+---
+
+## 4. Subtasks
+
+1. Create a new `ProfileScreen` widget with a form layout.
+2. Add `TextFormField` widgets for Name, Email, and Phone.
+3. Implement a "Save" button that displays a confirmation Snackbar.
+4. Add a navigation link/button to the `ProfileScreen` at the bottom of the Order Screen.
