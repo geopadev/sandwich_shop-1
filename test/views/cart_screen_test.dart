@@ -19,7 +19,11 @@ void main() {
     testWidgets('Displays items and allows quantity adjustment',
         (WidgetTester tester) async {
       final cart = Cart();
-      final sandwich = Sandwich(isFootlong: false);
+      final sandwich = Sandwich(
+        type: SandwichType.veggieDelight,
+        isFootlong: false,
+        breadType: BreadType.white,
+      );
       cart.add(sandwich);
 
       await tester.pumpWidget(MaterialApp(home: CartScreen(cart: cart)));
@@ -43,7 +47,11 @@ void main() {
     testWidgets('Remove button deletes item completely',
         (WidgetTester tester) async {
       final cart = Cart();
-      final sandwich = Sandwich(isFootlong: true);
+      final sandwich = Sandwich(
+        type: SandwichType.veggieDelight,
+        isFootlong: true,
+        breadType: BreadType.white,
+      );
       cart.add(sandwich, quantity: 3);
 
       await tester.pumpWidget(MaterialApp(home: CartScreen(cart: cart)));
