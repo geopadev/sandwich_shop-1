@@ -261,16 +261,18 @@ class _OrderScreenState extends State<OrderScreen> {
                                 subtitle: Text(
                                     '${sandwich.breadType.name} · Unit: ${_priceString(unit)} · ${_priceString(lineTotal)}'),
                                 trailing: SizedBox(
-                                  width: 140,
+                                  width: 160,
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       IconButton(
                                         icon: const Icon(Icons.edit),
                                         onPressed: () =>
                                             _showEditModal(sandwich),
                                         padding: EdgeInsets.zero,
-                                        constraints: const BoxConstraints(),
+                                        constraints: const BoxConstraints(
+                                            minWidth: 32, minHeight: 32),
                                       ),
                                       IconButton(
                                         icon: const Icon(Icons.remove),
@@ -279,8 +281,15 @@ class _OrderScreenState extends State<OrderScreen> {
                                           _showSnackBar(
                                               'Removed 1 × ${sandwich.name}');
                                         },
+                                        padding: EdgeInsets.zero,
+                                        constraints: const BoxConstraints(
+                                            minWidth: 32, minHeight: 32),
                                       ),
-                                      Text('$qty'),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 4.0),
+                                        child: Text('$qty'),
+                                      ),
                                       IconButton(
                                         icon: const Icon(Icons.add),
                                         onPressed: () {
@@ -288,6 +297,9 @@ class _OrderScreenState extends State<OrderScreen> {
                                             _cart.add(sandwich, quantity: 1);
                                           }
                                         },
+                                        padding: EdgeInsets.zero,
+                                        constraints: const BoxConstraints(
+                                            minWidth: 32, minHeight: 32),
                                       ),
                                       IconButton(
                                         icon: const Icon(Icons.delete_outline),
@@ -301,6 +313,9 @@ class _OrderScreenState extends State<OrderScreen> {
                                                 'Removed ${currentQty} × ${sandwich.name}');
                                           }
                                         },
+                                        padding: EdgeInsets.zero,
+                                        constraints: const BoxConstraints(
+                                            minWidth: 32, minHeight: 32),
                                       ),
                                     ],
                                   ),
