@@ -55,12 +55,12 @@ The Cart Modification feature enables users of the Sandwich Shop Flutter app to 
 
 ## 4. Subtasks
 
-1. Implement "+" and "–" quantity adjustment buttons for each cart item.
-2. Implement logic to remove an item if its quantity is reduced below 1.
-3. Add a "Remove" button for each cart item.
-4. Ensure the total price and UI update immediately after any change.
-5. Provide user feedback (snackbar) for remove and update actions.
-6. Handle empty cart states with a clear message.
+- [x] Implement "+" and "–" quantity adjustment buttons for each cart item.
+- [x] Implement logic to remove an item if its quantity is reduced below 1.
+- [x] Add a "Remove" button for each cart item.
+- [x] Ensure the total price and UI update immediately after any change.
+- [x] Provide user feedback (snackbar) for remove and update actions.
+- [x] Handle empty cart states with a clear message.
 
 # Profile Page Feature Requirements
 
@@ -105,7 +105,7 @@ The Profile Page feature allows users to view and edit their personal informatio
 
 ## 4. Subtasks
 
-1. Create a new `ProfileScreen` widget with a form layout.
-2. Add `TextFormField` widgets for Name, Email, and Phone.
-3. Implement a "Save" button that displays a confirmation Snackbar.
-4. Add a navigation link/button to the `ProfileScreen` at the bottom of the Order Screen.
+- [x] Create a new `ProfileScreen` widget with a form layout.
+- [x] Add `TextFormField` widgets for Name, Email, and Phone.
+- [x] Implement a "Save" button that displays a confirmation Snackbar.
+- [x] Add a navigation link/button to the `ProfileScreen` at the bottom of the Order Screen.
