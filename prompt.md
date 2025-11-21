@@ -1,105 +1,85 @@
-# Requirements Document: Cart Modification Feature
+## LLM Prompt for Implementing Cart Modification Features in a Flutter Sandwich Shop App
 
-## 1. Feature Description
-The Cart Modification feature aims to enhance the user experience on the `CartScreen` by allowing customers to adjust their current order before checkout. Currently, users can view items but cannot change them without clearing the cart or navigating back. This feature introduces granular control, enabling users to increment or decrement item quantities and remove specific items entirely.
+I am building a Flutter app for a sandwich shop. The app has two main pages:
+- **Order Screen:** Users select sandwiches and add them to their cart.
+- **Cart Screen:** Users view the items in their cart and see the total price.
 
-This feature will leverage the existing `Cart` model for state management and the `Pricing` repository to ensure accurate recalculation of totals based on the sandwich size and new quantities.
+### Relevant Models and Repository
 
-## 2. User Stories
+- **Sandwich (`lib/models/sandwich.dart`):**
+  - Has `SandwichType`, `BreadType`, and a `bool isFootlong` for size.
+  - Each sandwich has a `name` and an `image` getter for display.
+- **Cart (`lib/models/cart.dart`):**
+  - Stores a map of `Sandwich` to quantity.
+  - Methods: `add(Sandwich, {quantity})`, `remove(Sandwich, {quantity})`, `clear()`, `getQuantity(Sandwich)`.
+  - `totalPrice` is calculated using the `PricingRepository`.
+  - If removing more than the current quantity, the item is removed entirely.
+- **PricingRepository (`lib/repositories/pricing_repository.dart`):**
+  - `calculatePrice({required int quantity, required bool isFootlong})` returns the price for a sandwich based on size and quantity.
 
-### Story 1: Adjust Quantity
-**As a** hungry customer,
-**I want to** increase or decrease the number of a specific sandwich in my cart,
-**So that** I can order the exact amount I need without restarting my order.
+### Current UI
 
-### Story 2: Remove Item
-**As a** customer who changed their mind,
-**I want to** remove a specific sandwich from my cart,
-**So that** I don't pay for food I no longer want.
+- The cart page lists each sandwich, its size, bread type, quantity, and price.
+- The total price is shown at the bottom.
+- There is a "Back to Order" button.
 
-### Story 3: View Updated Total
-**As a** budget-conscious customer,
-**I want to** see the total price update instantly when I change quantities or remove items,
-**So that** I know exactly how much I will be charged.
+---
 
-## 3. Acceptance Criteria
+## Features to Implement
 
-### AC 1: Quantity Controls
-*   **Given** the user is on the `CartScreen`,
-*   **When** they view a cart item,
-*   **Then** they should see "+" and "-" buttons (or similar UI controls) associated with that item.
-*   **When** the "+" button is tapped, the quantity for that specific sandwich increases by 1.
-*   **When** the "-" button is tapped, the quantity decreases by 1.
+### 1. Change Quantity of an Item
 
-### AC 2: Minimum Quantity Handling
-*   **Given** an item has a quantity of 1,
-*   **When** the user taps the "-" button,
-*   **Then** the item should be removed from the cart entirely OR a confirmation dialog should appear (depending on UX preference, default to immediate removal for speed).
+**Description:**  
+Allow users to increase or decrease the quantity of a specific sandwich in their cart.
 
-### AC 3: Explicit Removal
-*   **Given** the user is on the `CartScreen`,
-*   **When** they tap a "Remove" icon (e.g., trash can) or perform a swipe-to-dismiss gesture on an item,
-*   **Then** the item is permanently removed from the cart list.
+**Requirements:**  
+- Each cart item should display "+" and "–" buttons to adjust quantity.
+- Tapping "+" increases the quantity by 1.
+- Tapping "–" decreases the quantity by 1.
+- If the quantity is reduced below 1, the item should be removed from the cart.
+- The total price should update automatically.
+- The UI should update immediately to reflect changes.
 
-### AC 4: Price Recalculation
-*   **Given** the user modifies a quantity or removes an item,
-*   **Then** the `Cart` model must trigger a recalculation of the total price.
-*   **And** the calculation must use the `Pricing` repository logic (Price = f(Quantity, Size)).
-*   **And** the UI must update immediately to reflect the new total.
+**Edge Cases:**  
+- If the user tries to decrease the quantity when it is 1, the item should be removed.
+- Prevent negative quantities.
 
-### AC 5: Data Integrity
-*   **Given** a `Sandwich` object in the cart,
-*   **When** the quantity is modified,
-*   **Then** the# Requirements Document: Cart Modification Feature
+---
 
-## 1. Feature Description
-The Cart Modification feature aims to enhance the user experience on the `CartScreen` by allowing customers to adjust their current order before checkout. Currently, users can view items but cannot change them without clearing the cart or navigating back. This feature introduces granular control, enabling users to increment or decrement item quantities and remove specific items entirely.
+### 2. Remove an Item from the Cart
 
-This feature will leverage the existing `Cart` model for state management and the `Pricing` repository to ensure accurate recalculation of totals based on the sandwich size and new quantities.
+**Description:**  
+Allow users to remove a sandwich from their cart entirely.
 
-## 2. User Stories
+**Requirements:**  
+- Each cart item should have a "Remove" button (e.g., a trash icon).
+- Tapping "Remove" deletes the item from the cart.
+- The total price updates accordingly.
+- Show a snackbar or other feedback when an item is removed.
 
-### Story 1: Adjust Quantity
-**As a** hungry customer,
-**I want to** increase or decrease the number of a specific sandwich in my cart,
-**So that** I can order the exact amount I need without restarting my order.
+---
 
-### Story 2: Remove Item
-**As a** customer who changed their mind,
-**I want to** remove a specific sandwich from my cart,
-**So that** I don't pay for food I no longer want.
+### 3. Edit Item Details (Optional)
 
-### Story 3: View Updated Total
-**As a** budget-conscious customer,
-**I want to** see the total price update instantly when I change quantities or remove items,
-**So that** I know exactly how much I will be charged.
+**Description:**  
+Allow users to edit details of a sandwich in their cart (e.g., change bread type, size, or sandwich type).
 
-## 3. Acceptance Criteria
+**Requirements:**  
+- Each cart item should have an "Edit" button.
+- Tapping "Edit" opens a dialog or navigates to a screen to modify sandwich options.
+- After saving, the cart updates the item (or replaces it if the combination is new).
+- The price and UI update accordingly.
 
-### AC 1: Quantity Controls
-*   **Given** the user is on the `CartScreen`,
-*   **When** they view a cart item,
-*   **Then** they should see "+" and "-" buttons (or similar UI controls) associated with that item.
-*   **When** the "+" button is tapped, the quantity for that specific sandwich increases by 1.
-*   **When** the "-" button is tapped, the quantity decreases by 1.
+---
 
-### AC 2: Minimum Quantity Handling
-*   **Given** an item has a quantity of 1,
-*   **When** the user taps the "-" button,
-*   **Then** the item should be removed from the cart entirely OR a confirmation dialog should appear (depending on UX preference, default to immediate removal for speed).
+### General UI and Behavior Requirements
 
-### AC 3: Explicit Removal
-*   **Given** the user is on the `CartScreen`,
-*   **When** they tap a "Remove" icon (e.g., trash can) or perform a swipe-to-dismiss gesture on an item,
-*   **Then** the item is permanently removed from the cart list.
+- All changes should be reflected immediately in the UI.
+- The cart's total price should always be accurate.
+- The cart should handle empty states gracefully (e.g., show a message if the cart is empty).
+- Provide user feedback (e.g., snackbar) for actions like removing or updating items.
+- The UI should prevent adding more than a maximum allowed quantity (see `OrderScreen.maxQuantity`).
 
-### AC 4: Price Recalculation
-*   **Given** the user modifies a quantity or removes an item,
-*   **Then** the `Cart` model must trigger a recalculation of the total price.
-*   **And** the calculation must use the `Pricing` repository logic (Price = f(Quantity, Size)).
-*   **And** the UI must update immediately to reflect the new total.
+---
 
-### AC 5: Data Integrity
-*   **Given** a `Sandwich` object in the cart,
-*   **When** the quantity is modified,
-*   **Then** the
+**Please provide Flutter code and UI suggestions to implement these features, using the provided models and repository.**
