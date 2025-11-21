@@ -135,22 +135,22 @@ Implement a responsive Navigation Drawer accessible from all screens to improve 
 
 ### 3.1. Reusability
 
-- [ ] A single, reusable widget defines the navigation menu items.
-- [ ] All screens utilize a shared layout wrapper to ensure consistency.
+- [x] A single, reusable widget defines the navigation menu items.
+- [x] All screens utilize a shared layout wrapper to ensure consistency.
 
 ### 3.2. Responsiveness
 
-- [ ] Screen width < 600px: Navigation is hidden in a Drawer (accessible via AppBar icon).
-- [ ] Screen width >= 600px: Navigation is displayed as a permanent side column (Row layout).
+- [x] Screen width < 600px: Navigation is hidden in a Drawer (accessible via AppBar icon).
+- [x] Screen width >= 600px: Navigation is displayed as a permanent side column (Row layout).
 
 ### 3.3. Navigation Items
 
-- [ ] Menu includes links to: Order Screen, Cart Screen, Profile Screen, About Screen.
+- [x] Menu includes links to: Order Screen, Cart Screen, Profile Screen, About Screen.
 
 ---
 
 ## 4. Subtasks
 
-1. Create a reusable `AppDrawer` widget containing the navigation menu items.
-2. Create a `ResponsiveLayout` widget that accepts a `body` and `title`. It should determine whether to show a `Scaffold` with a drawer (mobile) or a `Row` with a permanent side menu (desktop) based on screen width.
-3. Refactor `OrderScreen`, `CartScreen`, `ProfileScreen`, and `AboutScreen` to use the `ResponsiveLayout` widget instead of `Scaffold` directly.
+- [x] Create a reusable `AppDrawer` widget containing the navigation menu items.
+- [x] Create a `ResponsiveLayout` widget that accepts a `body` and `title`. It should determine whether to show a `Scaffold` with a drawer (mobile) or a `Row` with a permanent side menu (desktop) based on screen width.
+- [x] Refactor `OrderScreen`, `CartScreen`, `ProfileScreen`, and `AboutScreen` to use the `ResponsiveLayout` widget instead of `Scaffold` directly.

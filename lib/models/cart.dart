@@ -2,6 +2,14 @@ import 'sandwich.dart';
 import 'package:sandwich_shop/repositories/pricing_repository.dart';
 
 class Cart {
+  static final Cart _instance = Cart._internal();
+
+  factory Cart() {
+    return _instance;
+  }
+
+  Cart._internal();
+
   final Map<Sandwich, int> _items = {};
 
   // Returns a read-only copy of the items and their quantities
