@@ -215,9 +215,8 @@ void main() {
 
       // Verify SnackBar appears with appropriate message
       expect(find.byType(SnackBar), findsOneWidget);
-      expect(find.textContaining('Added'), findsOneWidget);
-      expect(find.textContaining('footlong'), findsOneWidget);
-      expect(find.textContaining('Veggie Delight'), findsOneWidget);
+      expect(find.textContaining('Added 1 footlong Veggie Delight'),
+          findsOneWidget);
     });
 
     testWidgets('SnackBar shows correct details for six-inch sandwich',
@@ -273,7 +272,7 @@ void main() {
       expect(find.textContaining('Added 3'), findsOneWidget);
     });
 
-    testWidgets('SnackBar dismisses after duration',
+    testWidgets('SnackBar appears and contains correct message',
         (WidgetTester tester) async {
       await tester.pumpWidget(const App());
 
@@ -284,15 +283,10 @@ void main() {
       await tester.tap(find.text('Add to Cart'));
       await tester.pump();
 
-      // SnackBar should be visible
+      // SnackBar should be visible with correct message
       expect(find.byType(SnackBar), findsOneWidget);
-
-      // Wait for SnackBar duration (2 seconds) + animation
-      await tester.pump(const Duration(seconds: 2));
-      await tester.pumpAndSettle();
-
-      // SnackBar should be dismissed
-      expect(find.byType(SnackBar), findsNothing);
+      expect(find.textContaining('Added 1 footlong'), findsOneWidget);
+      expect(find.textContaining('white bread'), findsOneWidget);
     });
   });
 

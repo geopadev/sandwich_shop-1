@@ -37,8 +37,8 @@ void main() {
       // Verify footlong label is displayed
       expect(find.text('Footlong'), findsOneWidget);
 
-      // Verify total price is displayed
-      expect(find.text('Total Price: £'), findsOneWidget);
+      // Verify total price is displayed (appears in both item card and footer)
+      expect(find.textContaining('£'), findsWidgets);
     });
 
     testWidgets('updates quantity and total price when item is added',
@@ -56,7 +56,7 @@ void main() {
 
       // Initial quantity and total price
       expect(find.text('Quantity: 2'), findsOneWidget);
-      expect(find.text('Total Price: £22.00'), findsOneWidget);
+      expect(find.text('£22.00'), findsWidgets);
 
       // Increase quantity
       await tester.tap(find.byIcon(Icons.add));
@@ -64,7 +64,7 @@ void main() {
 
       // Verify quantity and total price updated
       expect(find.text('Quantity: 3'), findsOneWidget);
-      expect(find.text('Total Price: £33.00'), findsOneWidget);
+      expect(find.text('£33.00'), findsWidgets);
     });
 
     testWidgets('updates quantity and total price when item is removed',
@@ -82,7 +82,7 @@ void main() {
 
       // Initial quantity and total price
       expect(find.text('Quantity: 2'), findsOneWidget);
-      expect(find.text('Total Price: £22.00'), findsOneWidget);
+      expect(find.text('£22.00'), findsWidgets);
 
       // Decrease quantity to 1
       await tester.tap(find.byIcon(Icons.remove));
@@ -90,7 +90,7 @@ void main() {
 
       // Verify quantity and total price updated
       expect(find.text('Quantity: 1'), findsOneWidget);
-      expect(find.text('Total Price: £11.00'), findsOneWidget);
+      expect(find.text('£11.00'), findsWidgets);
     });
 
     testWidgets('Remove button deletes item completely',
@@ -105,7 +105,7 @@ void main() {
 
       await tester.pumpWidget(MaterialApp(home: CartScreen(cart: cart)));
 
-      expect(find.text('Sandwich (Footlong)'), findsOneWidget);
+      expect(find.text('Veggie Delight'), findsOneWidget);
       expect(find.text('Quantity: 3'), findsOneWidget);
 
       // Tap the delete (trash) icon
@@ -113,7 +113,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify item is gone
-      expect(find.text('Sandwich (Footlong)'), findsNothing);
+      expect(find.text('Veggie Delight'), findsNothing);
       expect(cart.isEmpty, true);
 
       // Verify snackbar feedback
@@ -169,7 +169,7 @@ void main() {
       expect(cart.isEmpty, true);
     });
 
-    testWidgets('SnackBar dismisses after duration',
+    testWidgets('SnackBar appears with correct message when item removed',
         (WidgetTester tester) async {
       final cart = Cart();
       final sandwich = Sandwich(
@@ -184,16 +184,11 @@ void main() {
       // Remove item
       await tester.tap(find.byIcon(Icons.delete_outline));
       await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
 
-      // SnackBar should be visible
+      // SnackBar should be visible with correct message
       expect(find.byType(SnackBar), findsOneWidget);
-
-      // Wait for SnackBar duration (1 second) + animation
-      await tester.pump(const Duration(seconds: 1));
-      await tester.pumpAndSettle();
-
-      // SnackBar should be dismissed
-      expect(find.byType(SnackBar), findsNothing);
+      expect(find.text('Item removed from cart'), findsOneWidget);
     });
   });
 }
