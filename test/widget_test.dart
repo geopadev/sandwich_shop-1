@@ -197,6 +197,103 @@ void main() {
       final buttonWidget = tester.widget<ElevatedButton>(elevatedButton);
       expect(buttonWidget.onPressed, isNull);
     });
+
+    testWidgets('shows SnackBar when item is added to cart',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(const App());
+
+      // Scroll to make button visible
+      await tester.drag(
+          find.byType(SingleChildScrollView), const Offset(0, -400));
+      await tester.pumpAndSettle();
+
+      // Tap Add to Cart
+      await tester.tap(find.text('Add to Cart'));
+      await tester.pump(); // Start animation
+      await tester
+          .pump(const Duration(milliseconds: 100)); // Let animation progress
+
+      // Verify SnackBar appears with appropriate message
+      expect(find.byType(SnackBar), findsOneWidget);
+      expect(find.textContaining('Added'), findsOneWidget);
+      expect(find.textContaining('footlong'), findsOneWidget);
+      expect(find.textContaining('Veggie Delight'), findsOneWidget);
+    });
+
+    testWidgets('SnackBar shows correct details for six-inch sandwich',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(const App());
+
+      // Toggle to six-inch
+      await tester.tap(find.byType(Switch));
+      await tester.pumpAndSettle();
+
+      // Scroll to button
+      await tester.drag(
+          find.byType(SingleChildScrollView), const Offset(0, -400));
+      await tester.pumpAndSettle();
+
+      // Add to cart
+      await tester.tap(find.text('Add to Cart'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      // Verify SnackBar shows six-inch
+      expect(find.byType(SnackBar), findsOneWidget);
+      expect(find.textContaining('six-inch'), findsOneWidget);
+    });
+
+    testWidgets('SnackBar shows correct quantity in message',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(const App());
+
+      // Scroll to quantity controls
+      await tester.drag(
+          find.byType(SingleChildScrollView), const Offset(0, -300));
+      await tester.pumpAndSettle();
+
+      // Increase quantity to 3
+      await tester.tap(find.byIcon(Icons.add));
+      await tester.pump();
+      await tester.tap(find.byIcon(Icons.add));
+      await tester.pumpAndSettle();
+
+      // Scroll to button
+      await tester.drag(
+          find.byType(SingleChildScrollView), const Offset(0, -100));
+      await tester.pumpAndSettle();
+
+      // Add to cart
+      await tester.tap(find.text('Add to Cart'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      // Verify SnackBar shows quantity 3
+      expect(find.byType(SnackBar), findsOneWidget);
+      expect(find.textContaining('Added 3'), findsOneWidget);
+    });
+
+    testWidgets('SnackBar dismisses after duration',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(const App());
+
+      // Scroll and add to cart
+      await tester.drag(
+          find.byType(SingleChildScrollView), const Offset(0, -400));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Add to Cart'));
+      await tester.pump();
+
+      // SnackBar should be visible
+      expect(find.byType(SnackBar), findsOneWidget);
+
+      // Wait for SnackBar duration (2 seconds) + animation
+      await tester.pump(const Duration(seconds: 2));
+      await tester.pumpAndSettle();
+
+      // SnackBar should be dismissed
+      expect(find.byType(SnackBar), findsNothing);
+    });
   });
 
   group('OrderScreen - Cart Summary', () {
