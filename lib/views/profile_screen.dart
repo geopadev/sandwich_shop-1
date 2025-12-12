@@ -63,7 +63,7 @@ Widget build(BuildContext context) {
           child: Image.asset('assets/images/logo.png'),
         ),
       ),
-      title: const Text(
+      title: Text(
         'Profile',
         style: heading1,
       ),
@@ -90,7 +90,7 @@ Widget build(BuildContext context) {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text('Enter your details:', style: heading2),
+          Text('Enter your details:', style: heading2),
           const SizedBox(height: 20),
           TextField(
             controller: _nameController,
